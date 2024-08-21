@@ -1,0 +1,34 @@
+<configuration>
+  <property name="encoding" value="UTF-8"/>
+  <property name="logPath" value="./logs"/>
+  <property name="logFormat" value="%date [%thread] [%-5level] %logger{40} : %message%n"/>
+
+  <appender name="STDOUT" class="ch.qos.logback.core.ConsoleAppender">
+    <encoder class="ch.qos.logback.classic.encoder.PatternLayoutEncoder">
+      <pattern>${logFormat}</pattern>
+    </encoder>
+  </appender>
+
+  <appender name="FILE" class="ch.qos.logback.core.rolling.RollingFileAppender">
+    <file>${logPath}${file.separator}system.log</file>
+
+    <rollingPolicy class="ch.qos.logback.core.rolling.TimeBasedRollingPolicy">
+        <fileNamePattern>system.%d{yyyy-MM-dd}.log.tar.gz</fileNamePattern>
+        <maxHistory>7</maxHistory>
+    </rollingPolicy>
+    
+    <encoder class="ch.qos.logback.classic.encoder.PatternLayoutEncoder">
+      <charset>${encoding}</charset>
+      <pattern>${logFormat}</pattern>
+      <outputPatternAsHeader>true</outputPatternAsHeader>
+    </encoder>
+  </appender>
+  
+  <logger name="edu.self" level="DEBUG"/>
+  <logger name="org.hibernate.SQL" level="DEBUG"/>
+
+  <root level="INFO">
+    <appender-ref ref="FILE"/>
+    <appender-ref ref="STDOUT"/>
+  </root>
+</configuration>
