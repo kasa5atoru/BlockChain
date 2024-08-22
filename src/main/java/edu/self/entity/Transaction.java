@@ -2,7 +2,7 @@ package edu.self.entity;
 
 import java.time.LocalDateTime;
 
-import org.springframework.format.annotation.DateTimeFormat;
+import com.fasterxml.jackson.annotation.JsonFormat;
 
 import lombok.Data;
 import lombok.NonNull;
@@ -13,7 +13,7 @@ import lombok.RequiredArgsConstructor;
 public class Transaction {
 
 	// Time of Transaction
-	@DateTimeFormat(pattern = "yyyy-MM-dd HH:mm:ss")
+	@JsonFormat(pattern="yyyy-MM-dd HH:mm:ss")
 	private final LocalDateTime time = LocalDateTime.now();
 	
 	@NonNull
