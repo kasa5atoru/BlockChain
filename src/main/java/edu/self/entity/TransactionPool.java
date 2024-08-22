@@ -2,16 +2,15 @@ package edu.self.entity;
 
 import java.util.ArrayList;
 
-import lombok.ToString;
-
-@ToString
 public class TransactionPool {
 
 	static ArrayList<Transaction> transactions;
 	
 	static{
 		transactions = new ArrayList<Transaction>();
-		transactions.add(new Transaction("alice", "bob", 250, "abc"));
+		Person ps = new Person("alice", "public", "private");
+		Person pr = new Person("bob", "public", "private");
+		transactions.add(new Transaction(ps, pr, 250, "abc"));
 	}
 	
 	public static void addTransaction(Transaction trans) {
