@@ -24,8 +24,9 @@ public class TransactionController {
 		});
 		return res;
 	}
+	
 	@PostMapping(value = "/transaction_pool")
-	public String greeting(@RequestBody TransactionNoSign trans) {
+	public String postTransactionPool(@RequestBody TransactionNoSign trans) {
 		log.debug("Posted params as below: " + trans);
 		TransactionPool.addTransaction(new TransactionWithSign(trans.getSender(), trans.getReceiver(), trans.getAmount()));
 		return "OK";

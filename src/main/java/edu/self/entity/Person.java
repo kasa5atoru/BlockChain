@@ -9,33 +9,46 @@ import com.fasterxml.jackson.annotation.JsonIgnore;
 
 import edu.self.util.Sign;
 import io.swagger.v3.oas.annotations.media.Schema;
-import lombok.Data;
-import lombok.NonNull;
+import lombok.Getter;
 import lombok.ToString;
 
-@Data
-@ToString(exclude = {"public_key", "private_key"})
+@ToString(exclude = {"publicKey", "privateKey"})
+@Getter
 public class Person {
-	public Person(String name) {
-		this.name = name;
+
+	public Person() {
 		try {
 			KeyPair kp = 	Sign.generateKey();
-			this.public_key = kp.getPublic();
-			this.private_key = kp.getPrivate();
+			this.publicKey = kp.getPublic();
+			this.privateKey = kp.getPrivate();
 		} catch (NoSuchAlgorithmException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
 	}
-	@NonNull
+	public Person(String name) {
+		this.name = name;
+		try {
+			KeyPair kp = 	Sign.generateKey();
+			this.publicKey = kp.getPublic();
+			this.privateKey = kp.getPrivate();
+		} catch (NoSuchAlgorithmException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+	}
+
 	private String name;
 	
 	@Schema(accessMode = Schema.AccessMode.READ_ONLY)
 	@JsonIgnore
-	private PublicKey public_key;
+	private PublicKey publicKey;
 	
 	@Schema(accessMode = Schema.AccessMode.READ_ONLY)
 	@JsonIgnore
-	private PrivateKey private_key;
+	private PrivateKey privateKey;
 	
+	public void setName(String name) {
+		this.name = name;
+	}
 }
