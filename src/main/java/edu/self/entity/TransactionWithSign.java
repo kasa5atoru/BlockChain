@@ -14,12 +14,19 @@ public class TransactionWithSign extends TransactionNoSign{
 	
 	public TransactionWithSign(Person sender, Person receiver, long amount) {
 		super(sender, receiver, amount);
-		try {
-			log.debug("Signing use key of Sender:"+sender.getName());
-			this.signature = Sign.sign(super.toString(), this.getSender().getPrivateKey());
-		} catch (GeneralSecurityException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		} 
+		
+		if(this.signature == null) {
+			try {
+				log.debug("Signing use key of Sender:"+sender.getName());
+				this.signature = Sign.sign(super.toString(), this.getSender().getPrivateKey());
+			} catch (GeneralSecurityException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			} 
+		}
+	}
+	
+	public byte[] getSignature() {
+		return signature;
 	}
 }
