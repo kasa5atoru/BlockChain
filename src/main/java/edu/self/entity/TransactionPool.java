@@ -4,20 +4,20 @@ import java.util.ArrayList;
 
 public class TransactionPool {
 
-	static ArrayList<Transaction> transactions;
+	static ArrayList<TransactionNoSign> transactions;
 	
 	static{
-		transactions = new ArrayList<Transaction>();
-		Person ps = new Person("alice", "public", "private");
-		Person pr = new Person("bob", "public", "private");
-		transactions.add(new Transaction(ps, pr, 250, "abc"));
+		transactions = new ArrayList<TransactionNoSign>();
+		Person ps = new Person("alice");
+		Person pr = new Person("bob");
+		transactions.add(new TransactionNoSign(ps, pr, 250));
 	}
 	
-	public static void addTransaction(Transaction trans) {
+	public static void addTransaction(TransactionNoSign trans) {
 		transactions.add(trans);
 	}
 	
-	public static ArrayList<Transaction> get() {
+	public static ArrayList<TransactionNoSign> get() {
 		return transactions;
 	}
 }

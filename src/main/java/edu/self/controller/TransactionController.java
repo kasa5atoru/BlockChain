@@ -7,8 +7,9 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RestController;
 
-import edu.self.entity.Transaction;
+import edu.self.entity.TransactionNoSign;
 import edu.self.entity.TransactionPool;
+import edu.self.entity.TransactionWithSign;
 import lombok.extern.slf4j.Slf4j;
 
 @RestController
@@ -16,13 +17,17 @@ import lombok.extern.slf4j.Slf4j;
 public class TransactionController {
 
 	@GetMapping(value = "/transaction_pool")
-	public ArrayList<Transaction> showPool() {
-		return TransactionPool.get();
+	public ArrayList<TransactionNoSign> showPool() {
+		ArrayList<TransactionNoSign> res =TransactionPool.get(); 
+		res.iterator().forEachRemaining(i -> {
+			log.debug(i.toString());
+		});
+		return res;
 	}
 	@PostMapping(value = "/transaction_pool")
-	public String greeting(@RequestBody Transaction trans) {
+	public String greeting(@RequestBody TransactionNoSign trans) {
 		log.debug("Posted params as below: " + trans);
-		TransactionPool.addTransaction(trans);
+		TransactionPool.addTransaction(new TransactionWithSign(trans.getSender(), trans.getReceiver(), trans.getAmount()));
 		return "OK";
 	}
 }
